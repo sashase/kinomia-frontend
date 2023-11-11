@@ -1,0 +1,3 @@
+<template>
+  Theaters
+</template>
