@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, onMounted, ref, watch } from 'vue'
+import { Ref, onMounted, ref, watch } from "vue"
 
 const isMobileMenuOpen: Ref<boolean> = ref(false)
 const scrollPosition: Ref<number> = ref(0)
@@ -37,7 +37,7 @@ const updateScroll = () => {
 }
 
 onMounted(() => {
-  window.addEventListener('scroll', updateScroll)
+  window.addEventListener("scroll", updateScroll)
 })
 
 watch(isMobileMenuOpen, () => {
