@@ -20,6 +20,16 @@ const routes: Array<RouteRecordRaw> = [
         name: "Theaters",
         component: () => import("../views/Theaters.vue"),
       },
+      {
+        path: "/digest/:movieId",
+        name: "Digest",
+        component: () => import("../views/Digest.vue"),
+      },
+      {
+        path: "/showtimes/:movieId",
+        name: "Showtimes",
+        component: () => import("../views/Showtimes.vue"),
+      },
     ],
   },
 ]

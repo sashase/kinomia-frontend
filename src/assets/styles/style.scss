@@ -27,3 +27,11 @@ a {
 button {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
+.swiper-pagination-bullet {
+  background-color: variables.$surface-color !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: variables.$secondary-color !important;
+}
