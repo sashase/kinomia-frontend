@@ -49,7 +49,8 @@ watch(isMobileMenuOpen, () => {
 @use "../assets/styles/variables";
 
 .navbar {
-  position: sticky;
+  position: fixed;
+  width: 100%;
   top: 0;
   padding: 2rem 10%;
   border-radius: 0 0 1.25rem 1.25rem;
@@ -117,7 +118,7 @@ watch(isMobileMenuOpen, () => {
   font-size: variables.$text-4xl;
 }
 
-@media (max-width: variables.$breakpoint-mobile) {
+@media (max-width: variables.$breakpoint-small) {
   .navbar {
     justify-content: space-between;
   }

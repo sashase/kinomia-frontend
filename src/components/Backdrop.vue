@@ -1,109 +1,71 @@
 <template>
   <swiper :centeredSlides="true" :autoplay="{ delay: 5000, disableOnInteraction: false, }"
-    :pagination="{ clickable: true, }" :modules="modules" class="swiper">
-    <swiper-slide v-for="movie in movies" class="slide"
-      :style="{ background: 'linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)), url(' + `https://image.tmdb.org/t/p/original${movie.backdrop_path}` + ')' }">
-      <div class="details-wrapper">
-        <div class="details">
-          <span class="details__title">{{ movie.title }}</span>
-          <span class="details__overview" v-if="movie.overview">{{ movie.overview.length > 200 ?
-            `${movie.overview.slice(0, 200)}...` :
-            movie.overview }}</span>
-          <div class="details__buttons-wrapper">
-            <RouterLink class="details__button" :to="`/showtimes/${movie.id}`">Watch</RouterLink>
-            <RouterLink class="details__button" :to="`/digest/${movie.id}`">Digest</RouterLink>
-          </div>
-        </div>
-      </div>
+    :pagination="{ clickable: true, }" :modules="modules" class="swiper-container">
+    <swiper-slide v-for="movie in movies" class="slide" :style="slideStyle(movie)">
+      <router-link class="title-wrapper" :to="`/digest/${movie.id}`">
+        <span class="title"> {{ movie.title }}</span>
+      </router-link>
     </swiper-slide>
   </swiper>
 </template>
+
 <script setup lang="ts">
 import { ComputedRef, computed } from "vue"
 import { PlayingMovie } from "../interfaces"
 import { useMoviesStore } from "../stores"
 
 import { Swiper, SwiperSlide } from "swiper/vue"
-import { Autoplay, Pagination, Navigation } from "swiper/modules"
+import { Autoplay, Pagination } from "swiper/modules"
 import "swiper/css"
 import "swiper/css/pagination"
 import "swiper/css/navigation"
+import "swiper/css/effect-fade"
 
 const moviesStore = useMoviesStore()
 
-const modules = [Autoplay, Pagination, Navigation]
+const modules = [Autoplay, Pagination]
 
 const movies: ComputedRef<PlayingMovie[]> = computed(() => moviesStore.getPlayingMovies)
+
+const slideStyle = (movie: PlayingMovie) => ({
+  background: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)), url('https://image.tmdb.org/t/p/original${movie.backdrop_path}')`,
+})
 </script>
 
 <style scoped lang="scss">
 @use "../assets/styles/variables";
-
-.swiper {
-  width: 100vw;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-}
 
 .slide {
   background-size: cover !important;
   background-position: center !important;
 }
 
-.details-wrapper {
+.title-wrapper {
   height: 100vh;
-  display: flex;
+  width: 75%;
   align-items: center;
-  width: 80%;
+  justify-content: center;
+  display: flex;
   margin: auto;
 }
 
-.details {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  width: 40%;
+.title {
+  text-align: center;
+  font-size: clamp(variables.$text-5xl, 5vw, variables.$text-8xl);
+  font-weight: variables.$font-medium;
 }
 
-.details__title {
-  font-weight: medium;
-  font-size: clamp(variables.$text-5xl, 4vw, variables.$text-6xl);
-  color: variables.$primary-color;
-}
-
-.details__overview {
-  font-size: clamp(variables.$text-base, 1.5vw, variables.$text-lg);
-  color: variables.$secondary-color;
-}
-
-.details__buttons-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  gap: 3.125rem;
-}
-
-.details__button {
-  font-size: clamp(variables.$text-base, 1.5vw, variables.$text-lg);
-  padding: 0.7rem 2.8rem;
-  background-color: variables.$surface-color;
-  border-radius: 1.25rem;
-}
-
-@media (max-width: variables.$breakpoint-mobile) {
-  .swiper {
+@media (max-width: variables.$breakpoint-small) {
+  .swiper-container {
     max-height: -webkit-fill-available;
   }
 
-  .details {
-    width: 100%;
+  .title-wrapper {
+    width: 90%;
   }
 
-  .details__buttons-wrapper {
-    justify-content: space-between;
-    gap: 0;
+  .title {
+    font-size: variables.$text-5xl;
   }
 }
 </style>
