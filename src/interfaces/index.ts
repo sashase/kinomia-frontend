@@ -1,2 +1,6 @@
 export * from "./tmdb-movie.interface"
 export * from "./playing-movie.interface"
+export * from "./city.interface"
+export * from "./option.interface"
+export * from "./showtime.interface"
+export * from "./cinema-group.interface"

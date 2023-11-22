@@ -53,7 +53,7 @@ watch(isMobileMenuOpen, () => {
   width: 100%;
   top: 0;
   padding: 2rem 10%;
-  border-radius: 0 0 1.25rem 1.25rem;
+  border-radius: 0 0 variables.$border-rounded variables.$border-rounded;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -89,7 +89,7 @@ watch(isMobileMenuOpen, () => {
   transition: all 0.2s ease-in-out;
   -webkit-transition: all 0.2s ease-in-out;
   background-color: variables.$primary-color;
-  border-radius: 1.25rem;
+  border-radius: variables.$border-rounded;
 }
 
 .navbar-mobile {

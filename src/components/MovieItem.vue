@@ -32,7 +32,7 @@ const props = defineProps<Props>()
 
 .movie__poster {
   width: 100%;
-  border-radius: 1.25rem;
+  border-radius: variables.$border-rounded;
 }
 
 .details {

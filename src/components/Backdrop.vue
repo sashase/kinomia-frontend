@@ -37,7 +37,7 @@ const slideStyle = (movie: PlayingMovie) => ({
 
 .slide {
   background-size: cover !important;
-  background-position: center !important;
+  background-position: top !important;
 }
 
 .title-wrapper {
