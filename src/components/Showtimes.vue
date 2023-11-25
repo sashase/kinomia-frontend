@@ -130,7 +130,7 @@ onBeforeMount(() => {
   padding: 1.125rem 0;
   display: flex;
   align-items: start;
-  width: 50%;
+  width: 75%;
   gap: 1rem;
 }
 

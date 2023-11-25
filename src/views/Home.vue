@@ -2,10 +2,7 @@
   <Backdrop />
   <section class="playing-movies">
     <h3 class="playing-movies__title">in Theaters</h3>
-    <div class="playing-movies__list">
-      <MovieItem v-for="movie in movies" :id="movie.id" :title="movie.title" :posterPath="movie.poster_path"
-        :rating="movie.rating" />
-    </div>
+    <MoviesList :movies="movies" />
   </section>
 </template>
 
@@ -15,7 +12,7 @@ import BackendApiService from "../core/services/BackendApiService"
 import { useMoviesStore } from "../stores"
 import { MovieBrief } from "../interfaces"
 import Backdrop from "../components/Backdrop.vue"
-import MovieItem from "../components/MovieItem.vue"
+import MoviesList from "../components/MoviesList.vue"
 
 const moviesStore = useMoviesStore()
 
@@ -44,27 +41,10 @@ onBeforeMount(async () => {
   font-weight: variables.$font-medium;
 }
 
-.playing-movies__list {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 2rem;
-}
-
-@media (max-width: variables.$breakpoint-big) {
-  .playing-movies__list {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
 @media (max-width: variables.$breakpoint-medium) {
   .playing-movies {
     width: 85%;
     margin: 3rem auto;
-    gap: 1.5rem;
-  }
-
-  .playing-movies__list {
-    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
   }
 }
@@ -73,11 +53,6 @@ onBeforeMount(async () => {
   .playing-movies {
     width: 90%;
     margin: 2rem auto;
-    gap: 1rem;
-  }
-
-  .playing-movies__list {
-    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
 }

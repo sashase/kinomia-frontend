@@ -99,7 +99,7 @@ onBeforeMount(async () => {
   color: variables.$secondary-color;
   font-size: variables.$text-sm;
   background-color: variables.$surface-color;
-  padding: 5px 10px;
+  padding: 0.3rem 0.625rem;
   border-radius: variables.$border-rounded;
 }
 
@@ -125,12 +125,12 @@ onBeforeMount(async () => {
   font-size: clamp(variables.$text-sm, 2vw, variables.$text-base);
 }
 
-@media (max-width: variables.$breakpoint-medium) {
+@media (max-width: variables.$breakpoint-big) {
   .backdrop {
-    height: 85vh;
-    box-shadow: 0 -60vh 200px rgb(18, 18, 18) inset;
-    -webkit-box-shadow: 0 -60vh 200px rgb(18, 18, 18) inset;
-    -moz-box-shadow: 0 -60vh 200px rgb(18, 18, 18) inset;
+    height: 50vh;
+    box-shadow: 0 -30vh 200px rgb(18, 18, 18) inset;
+    -webkit-box-shadow: 0 -30vh 200px rgb(18, 18, 18) inset;
+    -moz-box-shadow: 0 -30vh 200px rgb(18, 18, 18) inset;
   }
 
   .overview {
@@ -138,12 +138,21 @@ onBeforeMount(async () => {
   }
 }
 
+@media (max-width: variables.$breakpoint-medium) {
+  .backdrop {
+    height: 85vh;
+    box-shadow: 0 -60vh 200px rgb(18, 18, 18) inset;
+    -webkit-box-shadow: 0 -60vh 200px rgb(18, 18, 18) inset;
+    -moz-box-shadow: 0 -60vh 200px rgb(18, 18, 18) inset;
+  }
+}
+
 @media (max-width: variables.$breakpoint-small) {
   .backdrop {
     height: 60vh;
-    box-shadow: 0 -20vh 200px rgb(18, 18, 18) inset;
-    -webkit-box-shadow: 0 -20vh 200px rgb(18, 18, 18) inset;
-    -moz-box-shadow: 0 -20vh 200px rgb(18, 18, 18) inset;
+    box-shadow: 0 -20vh 100px rgb(18, 18, 18) inset;
+    -webkit-box-shadow: 0 -20vh 100px rgb(18, 18, 18) inset;
+    -moz-box-shadow: 0 -20vh 100px rgb(18, 18, 18) inset;
   }
 
   .details {
