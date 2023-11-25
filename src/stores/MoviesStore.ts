@@ -1,14 +1,14 @@
 import { defineStore } from "pinia"
-import { PlayingMovie } from "../interfaces"
+import { MovieBrief } from "../interfaces"
 
 export const useMoviesStore = defineStore({
   id: "MoviesStore",
 
   state: () => ({
-    playingMovies: [] as PlayingMovie[],
+    movies: [] as MovieBrief[],
   }),
 
   getters: {
-    getPlayingMovies: (state) => state.playingMovies
+    getMovies: (state) => state.movies,
   },
 })

@@ -1,5 +1,5 @@
-export * from "./tmdb-movie.interface"
-export * from "./playing-movie.interface"
+export * from "./movie-brief.interface"
+export * from "./movie-detailed.interface"
 export * from "./city.interface"
 export * from "./option.interface"
 export * from "./showtime.interface"

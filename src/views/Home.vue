@@ -11,20 +11,20 @@
 
 <script setup lang="ts">
 import { ComputedRef, computed, onBeforeMount } from "vue"
-import MoviesApiService from "../core/services/MoviesApiService"
+import BackendApiService from "../core/services/BackendApiService"
 import { useMoviesStore } from "../stores"
-import { PlayingMovie } from "../interfaces"
+import { MovieBrief } from "../interfaces"
 import Backdrop from "../components/Backdrop.vue"
 import MovieItem from "../components/MovieItem.vue"
 
 const moviesStore = useMoviesStore()
 
-const movies: ComputedRef<PlayingMovie[]> = computed(() => moviesStore.getPlayingMovies)
+const movies: ComputedRef<MovieBrief[]> = computed(() => moviesStore.getMovies)
 
 onBeforeMount(async () => {
-  const { data } = await MoviesApiService.getPlayingMovies()
-  const playingMovies: PlayingMovie[] = data
-  moviesStore.playingMovies = playingMovies
+  const { data } = await BackendApiService.getPlayingMovies()
+  const movies: MovieBrief[] = data
+  moviesStore.movies = movies
 })
 </script>
 

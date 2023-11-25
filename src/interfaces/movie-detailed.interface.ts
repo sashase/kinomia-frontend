@@ -3,7 +3,7 @@ import { ProductionCompany } from "./production-company.interface"
 import { ProductionCountry } from "./production-country.interface"
 import { SpokenLanguage } from "./spoken-language.interface"
 
-export interface TmdbMovie {
+export interface MovieDetailed {
   adult: boolean
   backdrop_path: string
   belongs_to_collection: any

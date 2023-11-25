@@ -26,8 +26,8 @@
 <script setup lang="ts">
 import { Ref, onBeforeMount, ref } from "vue"
 import router from "../router"
-import MoviesApiService from "../core/services/MoviesApiService"
-import { TmdbMovie } from "../interfaces"
+import TmdbApiService from "../core/services/TmdbApiService"
+import { MovieDetailed } from "../interfaces"
 import { useMoviesStore } from "../stores"
 import Showtimes from "../components/Showtimes.vue"
 
@@ -35,17 +35,17 @@ const { movieId } = router.currentRoute.value.params
 
 const moviesStore = useMoviesStore()
 
-const movie: Ref<Partial<TmdbMovie>> = ref({} as TmdbMovie)
+const movie: Ref<Partial<MovieDetailed>> = ref({})
 
 const imageStyle = () => ({
   background: `linear-gradient(0deg, rgba(18,18,18,0) 50%, rgba(18,18,18,0.4) 100%), url('https://image.tmdb.org/t/p/original${movie.value.backdrop_path}')`,
 })
 
 onBeforeMount(async () => {
-  const initialData = moviesStore.playingMovies.find((element) => element.id === parseInt(String(movieId)))
+  const initialData = moviesStore.getMovies.find((element) => element.id === parseInt(String(movieId)))
   if (initialData) movie.value = initialData
 
-  await MoviesApiService.getMovie(movieId as string)
+  await TmdbApiService.getMovie(movieId as string)
     .then(({ data }) => movie.value = data)
 })
 

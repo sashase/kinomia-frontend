@@ -1,4 +1,4 @@
-export interface PlayingMovie {
+export interface MovieBrief {
   id: number
   title: string
   title_ua: string

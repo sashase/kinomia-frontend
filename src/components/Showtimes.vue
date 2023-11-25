@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import { ref, onBeforeMount, computed } from "vue"
 import OptionsDropdown from "./OptionsDropdown.vue"
-import MoviesApiService from "../core/services/MoviesApiService"
+import BackendApiService from "../core/services/BackendApiService"
 import { City, Option, Showtime, CinemaGroup } from "../interfaces"
 
 interface Props {
@@ -118,8 +118,8 @@ const cinemasGroups = computed<CinemaGroup[]>(() => groupShowtimesByCinema(filte
 
 // Lifecycle hooks
 onBeforeMount(() => {
-  MoviesApiService.getCities().then(({ data }) => (allCities.value = data))
-  MoviesApiService.getAllShowtimes(props.movieId).then(({ data }) => (allShowtimes.value = data))
+  BackendApiService.getCities().then(({ data }) => (allCities.value = data))
+  BackendApiService.getShowtimes(props.movieId).then(({ data }) => (allShowtimes.value = data))
 })
 
 </script>

@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { ComputedRef, computed } from "vue"
-import { PlayingMovie } from "../interfaces"
+import { MovieBrief } from "../interfaces"
 import { useMoviesStore } from "../stores"
 
 import { Swiper, SwiperSlide } from "swiper/vue"
@@ -25,9 +25,9 @@ const moviesStore = useMoviesStore()
 
 const modules = [Autoplay, Pagination]
 
-const movies: ComputedRef<PlayingMovie[]> = computed(() => moviesStore.getPlayingMovies)
+const movies: ComputedRef<MovieBrief[]> = computed(() => moviesStore.getMovies)
 
-const slideStyle = (movie: PlayingMovie) => ({
+const slideStyle = (movie: MovieBrief) => ({
   background: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)), url('https://image.tmdb.org/t/p/original${movie.backdrop_path}')`,
 })
 </script>
