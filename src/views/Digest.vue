@@ -1,5 +1,5 @@
 <template>
-  <div class="digest-wrapper">
+  <div class="digest">
     <section class="backdrop" :style="imageStyle()">
       <div class="details">
         <h3 class="details__title">{{ movie.title }}</h3>
@@ -16,6 +16,10 @@
         <p class="overview-section__content">{{ movie.overview }}</p>
       </div>
       <div class="overview-section">
+        <h5 class="overview-section__title">Cast</h5>
+        <Cast v-if="movie.id" :movieId="movie.id" />
+      </div>
+      <div class="overview-section overview-section-showtimes">
         <h5 class="overview-section__title">Showtimes</h5>
         <Showtimes v-if="movie.id" :movieId="movie.id" />
       </div>
@@ -30,6 +34,7 @@ import TmdbApiService from "../core/services/TmdbApiService"
 import { MovieDetailed } from "../interfaces"
 import { useMoviesStore } from "../stores"
 import Showtimes from "../components/Showtimes.vue"
+import Cast from "../components/Cast.vue"
 
 const { movieId } = router.currentRoute.value.params
 
@@ -45,7 +50,7 @@ onBeforeMount(async () => {
   const initialData = moviesStore.getMovies.find((element) => element.id === parseInt(String(movieId)))
   if (initialData) movie.value = initialData
 
-  await TmdbApiService.getMovie(movieId as string)
+  TmdbApiService.getMovie(parseInt(String(movieId)))
     .then(({ data }) => movie.value = data)
 })
 
@@ -54,7 +59,7 @@ onBeforeMount(async () => {
 <style scoped lang="scss">
 @use "../assets/styles/variables";
 
-.digest-wrapper {
+.digest {
   display: flex;
   flex-direction: column;
   gap: 7rem;
@@ -90,6 +95,7 @@ onBeforeMount(async () => {
 .genres {
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .genres__genre {
@@ -98,7 +104,7 @@ onBeforeMount(async () => {
   text-align: center;
   color: variables.$secondary-color;
   font-size: variables.$text-sm;
-  background-color: variables.$surface-color;
+  background-color: variables.$primary-surface-color;
   padding: 0.3rem 0.625rem;
   border-radius: variables.$border-rounded;
 }
@@ -108,21 +114,33 @@ onBeforeMount(async () => {
   margin: auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
   gap: 3.5rem;
 }
 
 .overview-section {
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  gap: 1rem;
+  overflow: auto;
+}
+
+.overview-section-showtimes {
+  grid-column: 2;
+  grid-row: 1 / 3
 }
 
 .overview-section__title {
   margin: 0;
-  font-size: clamp(variables.$text-lg, 2.5vw, variables.$text-xl);
+  font-size: clamp(variables.$text-lg, 3vw, variables.$text-xl);
   color: variables.$secondary-color;
+  font-weight: variables.$font-medium;
 }
 
 .overview-section__content {
   font-size: clamp(variables.$text-sm, 2vw, variables.$text-base);
+  margin: 0;
 }
 
 @media (max-width: variables.$breakpoint-big) {
@@ -135,6 +153,11 @@ onBeforeMount(async () => {
 
   .overview {
     grid-template-columns: 1fr;
+  }
+
+  .overview-section-showtimes {
+    grid-column: 1;
+    grid-row: 3;
   }
 }
 

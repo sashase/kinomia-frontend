@@ -59,9 +59,10 @@ watch(() => props.options, () => {
 
 .option-selected {
   width: 100%;
-  background-color: variables.$surface-color;
+  background-color: variables.$primary-surface-color;
   border-radius: variables.$border-rounded;
   padding: 0.65rem 1.125rem;
+  cursor: pointer;
 }
 
 .options {
@@ -75,7 +76,7 @@ watch(() => props.options, () => {
   border-radius: variables.$border-rounded;
   gap: 1rem;
   padding: 1rem 0;
-  background-color: variables.$surface-color;
+  background-color: variables.$primary-surface-color;
   z-index: 1;
 }
 

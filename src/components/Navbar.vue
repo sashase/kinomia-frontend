@@ -100,7 +100,7 @@ watch(isMobileMenuOpen, () => {
   left: 0;
   height: 100vh;
   width: 100%;
-  background-color: variables.$surface-color;
+  background-color: variables.$secondary-surface-color;
   transition: all, 0.2s ease-in-out;
 }
 

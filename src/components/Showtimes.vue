@@ -1,23 +1,25 @@
 <template>
-  <div class="options">
-    <OptionsDropdown :options="citiesOptions" @option-selected="handleCityChange" />
-    <OptionsDropdown :options="datesOptions" @option-selected="handleDateChange" />
-  </div>
   <div class="showtimes-wrapper">
-    <div v-if="cinemasGroups" v-for="cinema in cinemasGroups" :key="cinema.cinemaName" class="cinema-group">
-      <div class="cinema-group__cinema">
-        <img class="cinema-group__network-image" :src="`/svg/${cinema.networkName}.svg`" :alt="cinema.networkName" />
-        <h3 class="cinema-group__cinema-name">{{ cinema.cinemaName }}</h3>
-      </div>
-      <div class="cinema-group__showtimes">
-        <a v-for="showtime in cinema.showtimes" :key="showtime.id" :href="showtime.order_link"
-          :class="`showtime ${isDateInPast(showtime.date) ? 'showtime-disabled' : ''}`">
-          <span class="showtime__time">{{ formatShowtimeDate(showtime.date) }}</span>
-          <span class="showtime__format">{{ showtime.format }}</span>
-        </a>
-      </div>
+    <div class="options">
+      <OptionsDropdown :options="citiesOptions" @option-selected="handleCityChange" />
+      <OptionsDropdown :options="datesOptions" @option-selected="handleDateChange" />
     </div>
-    <p v-else>Showtimes not found</p>
+    <div class="showtimes">
+      <div v-if="cinemasGroups" v-for="cinema in cinemasGroups" :key="cinema.cinemaName" class="cinema-group">
+        <div class="cinema-group__cinema">
+          <img class="cinema-group__network-image" :src="`/svg/${cinema.networkName}.svg`" :alt="cinema.networkName" />
+          <h3 class="cinema-group__cinema-name">{{ cinema.cinemaName }}</h3>
+        </div>
+        <div class="cinema-group__showtimes">
+          <a v-for="showtime in cinema.showtimes" :key="showtime.id" :href="showtime.order_link"
+            :class="`showtime ${isDateInPast(showtime.date) ? 'showtime-disabled' : ''}`">
+            <span class="showtime__time">{{ formatShowtimeDate(showtime.date) }}</span>
+            <span class="showtime__format">{{ showtime.format }}</span>
+          </a>
+        </div>
+      </div>
+      <p v-else>Showtimes not found</p>
+    </div>
   </div>
 </template>
 
@@ -126,25 +128,39 @@ onBeforeMount(() => {
 <style scoped lang="scss">
 @use "../assets/styles/variables";
 
-.options {
-  padding: 1.125rem 0;
-  display: flex;
-  align-items: start;
-  width: 75%;
-  gap: 1rem;
-}
-
 .showtimes-wrapper {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  min-height: 20rem;
+}
+
+.options {
+  background-color: variables.$secondary-surface-color;
+  border-radius: variables.$border-rounded;
+  padding: 0.625rem 1.25rem;
+  display: flex;
+  align-items: center;
+  width: 75%;
+  gap: 1rem;
+}
+
+.showtimes {
+  padding: 1.25rem;
+  border-radius: variables.$border-rounded;
+  background-color: variables.$secondary-surface-color;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
   align-items: start;
+  max-height: 30rem;
+  overflow: auto;
 }
 
 .cinema-group {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .cinema-group__cinema {
@@ -159,6 +175,7 @@ onBeforeMount(() => {
 }
 
 .cinema-group__cinema-name {
+  margin: 0;
   font-size: variables.$text-lg;
   font-weight: 400;
 }
@@ -171,7 +188,7 @@ onBeforeMount(() => {
 
 .showtime {
   padding: 0.5rem 1.5rem;
-  background-color: variables.$surface-color;
+  background-color: variables.$primary-surface-color;
   border-radius: variables.$border-rounded;
   display: flex;
   flex-direction: column;
