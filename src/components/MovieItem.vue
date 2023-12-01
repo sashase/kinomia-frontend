@@ -3,8 +3,9 @@
     <img class="movie__poster" :src="`https://image.tmdb.org/t/p/original${posterPath}`" alt="movie-poster">
     <div class="details">
       <span class="details__title"> {{ title }}</span>
-      <span class="details__rating" v-if="rating">{{ rating.toFixed(1) }}<img class="details__rating-svg"
-          src="/svg/rating.svg" alt="rating"></span>
+      <span class="details__rating" v-if="rating">{{ rating.toFixed(1) }}
+        <i class="fa-solid fa-star fa-sm" style="color: #d6d329;" />
+      </span>
     </div>
   </router-link>
 </template>
@@ -17,7 +18,7 @@ interface Props {
   rating?: number
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 </script>
 
 <style scoped lang="scss">

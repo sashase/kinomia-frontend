@@ -1,5 +1,5 @@
 <template>
-  <div v-if="cast.length" class="cast">
+  <div class="cast">
     <div class="actor" v-for="actor in cast">
       <div class="actor__image-wrapper">
         <img v-if="actor.profile_path" class="actor__image"
@@ -15,36 +15,22 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, onBeforeMount, ref } from "vue"
-import TmdbApiService from "../core/services/TmdbApiService"
 import { Actor } from "../interfaces"
 
 interface Props {
-  movieId: number
+  cast: Actor[]
 }
 
-const props = defineProps<Props>()
-
-const cast: Ref<Actor[]> = ref([])
-
-onBeforeMount(() => {
-  TmdbApiService.getCast(props.movieId)
-    .then(({ data }) => cast.value = data.cast)
-    .catch((error) => console.log(error))
-})
-
+defineProps<Props>()
 </script>
 
 <style scoped lang="scss">
 @use "../assets/styles/variables";
+@use "../assets/styles/mixins";
 
 .cast {
-  padding: 1.25rem;
-  display: flex;
-  background-color: variables.$secondary-surface-color;
-  border-radius: variables.$border-rounded;
+  @include mixins.digestCard;
   overflow: auto;
-  gap: 1rem;
 }
 
 .actor {

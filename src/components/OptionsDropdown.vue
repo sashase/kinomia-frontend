@@ -37,13 +37,12 @@ const toggleSelect = () => {
 const selectOption = (option: Option) => {
   selectedOption.value = option
   emit("optionSelected", option)
-  console.log(selectedOption.value, option)
 }
 
 watch(() => props.options, () => {
   selectedOption.value = props.options[0]
   emit("optionSelected", props.options[0])
-})
+}, { immediate: true })
 </script>
 
 <style scoped lang="scss">

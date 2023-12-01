@@ -1,0 +1,9 @@
+@use "variables";
+
+@mixin digestCard {
+    padding: 1.25rem;
+    display: flex;
+    background-color: variables.$secondary-surface-color;
+    border-radius: variables.$border-rounded;
+    gap: 1rem;
+}

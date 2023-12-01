@@ -11,17 +11,22 @@
       </div>
     </section>
     <section class="overview">
-      <div class="overview-section">
+      <div v-if="movie.release_date || movie.runtime || movie.vote_average || movie.tagline || movie.overview"
+        class="overview-section">
         <h5 class="overview-section__title">About</h5>
-        <p class="overview-section__content">{{ movie.overview }}</p>
+        <About :movie="movie" />
       </div>
-      <div class="overview-section">
+      <div v-if="cast.length" class="overview-section">
         <h5 class="overview-section__title">Cast</h5>
-        <Cast v-if="movie.id" :movieId="movie.id" />
+        <Cast :cast="cast" />
       </div>
-      <div class="overview-section overview-section-showtimes">
+      <div v-if="allShowtimes.length" class="overview-section overview-section-showtimes">
         <h5 class="overview-section__title">Showtimes</h5>
-        <Showtimes v-if="movie.id" :movieId="movie.id" />
+        <Showtimes :allShowtimes="allShowtimes" />
+      </div>
+      <div v-if="reviews.length" class="overview-section">
+        <h5 class="overview-section__title">Reviews</h5>
+        <Reviews :reviews="reviews" />
       </div>
     </section>
   </div>
@@ -31,16 +36,22 @@
 import { Ref, onBeforeMount, ref } from "vue"
 import router from "../router"
 import TmdbApiService from "../core/services/TmdbApiService"
-import { MovieDetailed } from "../interfaces"
+import { MovieDetailed, Showtime, Actor, Review, } from "../interfaces"
 import { useMoviesStore } from "../stores"
 import Showtimes from "../components/Showtimes.vue"
 import Cast from "../components/Cast.vue"
+import About from "../components/About.vue"
+import Reviews from "../components/Reviews.vue"
+import BackendApiService from "../core/services/BackendApiService"
 
 const { movieId } = router.currentRoute.value.params
 
 const moviesStore = useMoviesStore()
 
 const movie: Ref<Partial<MovieDetailed>> = ref({})
+const allShowtimes: Ref<Showtime[]> = ref([])
+const cast: Ref<Actor[]> = ref([])
+const reviews: Ref<Review[]> = ref([])
 
 const imageStyle = () => ({
   background: `linear-gradient(0deg, rgba(18,18,18,0) 50%, rgba(18,18,18,0.4) 100%), url('https://image.tmdb.org/t/p/original${movie.value.backdrop_path}')`,
@@ -52,6 +63,19 @@ onBeforeMount(async () => {
 
   TmdbApiService.getMovie(parseInt(String(movieId)))
     .then(({ data }) => movie.value = data)
+    .catch((error) => console.log(error))
+
+  BackendApiService.getShowtimes(parseInt(String(movieId)))
+    .then(({ data }) => allShowtimes.value = data)
+    .catch((error) => console.log(error))
+
+  TmdbApiService.getCast(parseInt(String(movieId)))
+    .then(({ data }) => cast.value = data.cast)
+    .catch((error) => console.log(error))
+
+  TmdbApiService.getReviews(parseInt(String(movieId)))
+    .then(({ data }) => reviews.value = data.results)
+    .catch((error) => console.log(error))
 })
 
 </script>
@@ -128,7 +152,7 @@ onBeforeMount(async () => {
 
 .overview-section-showtimes {
   grid-column: 2;
-  grid-row: 1 / 3
+  grid-row: 1 / span 2
 }
 
 .overview-section__title {

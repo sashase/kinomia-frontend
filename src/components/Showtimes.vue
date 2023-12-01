@@ -27,10 +27,11 @@
 import { ref, onBeforeMount, computed } from "vue"
 import OptionsDropdown from "./OptionsDropdown.vue"
 import BackendApiService from "../core/services/BackendApiService"
+import { parseDate, prettifyDate } from "../core/helpers"
 import { City, Option, Showtime, CinemaGroup } from "../interfaces"
 
 interface Props {
-  movieId: number
+  allShowtimes: Showtime[]
 }
 
 const props = defineProps<Props>()
@@ -38,8 +39,6 @@ const props = defineProps<Props>()
 
 // Fetched properties
 const allCities = ref<City[]>([])
-const allShowtimes = ref<Showtime[]>([])
-
 
 // Selected options
 const selectedCity = ref<Option | null>(null)
@@ -72,13 +71,13 @@ const getCityOptions = (showtimes: Showtime[], cities: City[]): Option[] => {
 
 const getDateOptions = (showtimes: Showtime[]): Option[] => {
   const uniqueDates = [...new Set(showtimes.map((showtime) => showtime.date.split("T")[0]))]
-  return uniqueDates.map((uniqueDate, key) => ({ id: key, name: uniqueDate }))
+  return uniqueDates.map((uniqueDate, key) => ({ id: key, name: prettifyDate(uniqueDate) }))
 }
 
 const getFilteredShowtimes = (showtimes: Showtime[], selectedDate: Option | null, selectedCity: Option | null): Showtime[] => {
   if (!selectedDate || !selectedCity) return []
   return showtimes.filter(
-    (showtime) => showtime.date.split("T")[0] === selectedDate.name && showtime.cinema.city_id === selectedCity.id
+    (showtime) => showtime.date.split("T")[0] === parseDate(selectedDate.name) && showtime.cinema.city_id === selectedCity.id
   )
 }
 
@@ -110,10 +109,10 @@ const isDateInPast = (date: string): boolean => {
 
 
 // Computed properties
-const citiesOptions = computed<Option[]>(() => getCityOptions(allShowtimes.value, allCities.value))
-const datesOptions = computed<Option[]>(() => getDateOptions(allShowtimes.value))
+const citiesOptions = computed<Option[]>(() => getCityOptions(props.allShowtimes, allCities.value))
+const datesOptions = computed<Option[]>(() => getDateOptions(props.allShowtimes))
 
-const filteredShowtimes = computed<Showtime[]>(() => getFilteredShowtimes(allShowtimes.value, selectedDate.value, selectedCity.value))
+const filteredShowtimes = computed<Showtime[]>(() => getFilteredShowtimes(props.allShowtimes, selectedDate.value, selectedCity.value))
 
 const cinemasGroups = computed<CinemaGroup[]>(() => groupShowtimesByCinema(filteredShowtimes.value))
 
@@ -121,12 +120,12 @@ const cinemasGroups = computed<CinemaGroup[]>(() => groupShowtimesByCinema(filte
 // Lifecycle hooks
 onBeforeMount(() => {
   BackendApiService.getCities().then(({ data }) => (allCities.value = data))
-  BackendApiService.getShowtimes(props.movieId).then(({ data }) => (allShowtimes.value = data))
 })
 
 </script>
 <style scoped lang="scss">
 @use "../assets/styles/variables";
+@use "../assets/styles/mixins";
 
 .showtimes-wrapper {
   display: flex;
@@ -136,24 +135,17 @@ onBeforeMount(() => {
 }
 
 .options {
-  background-color: variables.$secondary-surface-color;
-  border-radius: variables.$border-rounded;
-  padding: 0.625rem 1.25rem;
-  display: flex;
+  @include mixins.digestCard;
   align-items: center;
   width: 75%;
-  gap: 1rem;
+  overflow: inherit;
 }
 
 .showtimes {
-  padding: 1.25rem;
-  border-radius: variables.$border-rounded;
-  background-color: variables.$secondary-surface-color;
-  display: flex;
+  @include mixins.digestCard;
   flex-direction: column;
-  gap: 2rem;
   align-items: start;
-  max-height: 30rem;
+  max-height: 60vh;
   overflow: auto;
 }
 
@@ -177,7 +169,7 @@ onBeforeMount(() => {
 .cinema-group__cinema-name {
   margin: 0;
   font-size: variables.$text-lg;
-  font-weight: 400;
+  font-weight: variables.$font-medium;
 }
 
 .cinema-group__showtimes {
