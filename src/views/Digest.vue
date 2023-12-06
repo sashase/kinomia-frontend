@@ -46,6 +46,8 @@ import BackendApiService from "../core/services/BackendApiService"
 
 const { movieId } = router.currentRoute.value.params
 
+const baseImageUrlOriginal: string = import.meta.env.VITE_TMDB_BASE_IMAGE_URL_ORIGINAL
+
 const moviesStore = useMoviesStore()
 
 const movie: Ref<Partial<MovieDetailed>> = ref({})
@@ -54,7 +56,7 @@ const cast: Ref<Actor[]> = ref([])
 const reviews: Ref<Review[]> = ref([])
 
 const imageStyle = () => ({
-  background: `linear-gradient(0deg, rgba(18,18,18,0) 50%, rgba(18,18,18,0.4) 100%), url('https://image.tmdb.org/t/p/original${movie.value.backdrop_path}')`,
+  background: `linear-gradient(0deg, rgba(18,18,18,0) 50%, rgba(18,18,18,0.4) 100%), url('${baseImageUrlOriginal}${movie.value.backdrop_path}')`,
 })
 
 onBeforeMount(async () => {
@@ -167,7 +169,7 @@ onBeforeMount(async () => {
   margin: 0;
 }
 
-@media (max-width: variables.$breakpoint-big) {
+@media (max-width: variables.$breakpoint-l) {
   .backdrop {
     height: 50vh;
     box-shadow: 0 -30vh 200px rgb(18, 18, 18) inset;
@@ -185,7 +187,7 @@ onBeforeMount(async () => {
   }
 }
 
-@media (max-width: variables.$breakpoint-medium) {
+@media (max-width: variables.$breakpoint-m) {
   .backdrop {
     height: 85vh;
     box-shadow: 0 -60vh 200px rgb(18, 18, 18) inset;
@@ -194,7 +196,7 @@ onBeforeMount(async () => {
   }
 }
 
-@media (max-width: variables.$breakpoint-small) {
+@media (max-width: variables.$breakpoint-s) {
   .backdrop {
     height: 60vh;
     box-shadow: 0 -20vh 100px rgb(18, 18, 18) inset;

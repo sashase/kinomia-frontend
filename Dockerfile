@@ -10,6 +10,8 @@ COPY --chown=node:node package*.json ./
 
 RUN npm ci
 
+RUN mkdir -p node_modules/.vite && chmod -R 777 node_modules/.vite
+
 COPY --chown=node:node . .
 
 USER node

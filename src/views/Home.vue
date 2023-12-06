@@ -41,7 +41,7 @@ onBeforeMount(async () => {
   font-weight: variables.$font-medium;
 }
 
-@media (max-width: variables.$breakpoint-medium) {
+@media (max-width: variables.$breakpoint-m) {
   .playing-movies {
     width: 85%;
     margin: 3rem auto;
@@ -49,7 +49,7 @@ onBeforeMount(async () => {
   }
 }
 
-@media (max-width: variables.$breakpoint-small) {
+@media (max-width: variables.$breakpoint-s) {
   .playing-movies {
     width: 90%;
     margin: 2rem auto;

@@ -1,11 +1,13 @@
 <template>
   <router-link :to="`/digest/${id}`" class="movie">
-    <img class="movie__poster" :src="`https://image.tmdb.org/t/p/original${posterPath}`" alt="movie-poster">
-    <div class="details">
-      <span class="details__title"> {{ title }}</span>
-      <span class="details__rating" v-if="rating">{{ rating.toFixed(1) }}
+    <div class="movie__poster-wrapper">
+      <img class="movie__poster" :src="`${baseImageUrlCompressed}${posterPath}`" :alt="title">
+    </div>
+    <div class="movie__details">
+      <p class="movie__title">{{ title }}</p>
+      <p class="movie__rating" v-if="rating">{{ rating.toFixed(1) }}
         <i class="fa-solid fa-star fa-sm" style="color: #d6d329;" />
-      </span>
+      </p>
     </div>
   </router-link>
 </template>
@@ -19,52 +21,61 @@ interface Props {
 }
 
 defineProps<Props>()
+
+const baseImageUrlCompressed: string = import.meta.env.VITE_TMDB_BASE_IMAGE_URL_COMPRESSED
 </script>
 
 <style scoped lang="scss">
 @use "../assets/styles/variables";
 
 .movie {
-  font-size: variables.$text-base;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  border-radius: variables.$border-rounded;
+  background-color: variables.$secondary-surface-color;
+}
+
+.movie__poster-wrapper {
+  height: 25rem;
 }
 
 .movie__poster {
+  border-radius: variables.$border-rounded variables.$border-rounded 0 0;
+  object-fit: cover;
+  height: 100%;
   width: 100%;
-  border-radius: variables.$border-rounded;
 }
 
-.details {
+.movie__details {
+  padding: 0.75rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  justify-content: center;
+  gap: 0.375rem;
 }
 
-.details__rating {
-  font-size: variables.$text-sm;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+.movie__title {
+  margin: 0;
+  font-weight: variables.$font-medium;
+  font-size: clamp(variables.$text-base, 2.5vw, variables.$text-lg);
 }
 
-.details__rating-svg {
-  width: variables.$text-base;
+.movie__rating {
+  margin: 0;
+  font-weight: variables.$font-regular;
+  font-size: clamp(variables.$text-sm, 2vw, variables.$text-base);
+  color: variables.$secondary-color;
 }
 
-@media (max-width: variables.$breakpoint-small) {
-
-  .details__title {
-    font-size: variables.$text-sm;
+@media (max-width: variables.$breakpoint-xl) {
+  .movie__poster-wrapper {
+    height: 25rem;
   }
+}
 
-  .details__rating {
-    font-size: variables.$text-xs;
-  }
-
-  .details__rating-svg {
-    width: variables.$text-sm;
+@media (max-width: variables.$breakpoint-s) {
+  .movie__poster-wrapper {
+    height: 15rem;
   }
 }
 </style>

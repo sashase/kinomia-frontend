@@ -25,22 +25,27 @@ defineProps<Props>()
   gap: 2rem;
 }
 
-@media (max-width: variables.$breakpoint-big) {
+@media (max-width: variables.$breakpoint-xl) {
   .movies-list {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
-@media (max-width: variables.$breakpoint-medium) {
+@media (max-width: variables.$breakpoint-l) {
   .movies-list {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: variables.$breakpoint-m) {
+  .movies-list {
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
 }
 
-@media (max-width: variables.$breakpoint-small) {
+@media (max-width: variables.$breakpoint-s) {
   .movies-list {
-    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
 }

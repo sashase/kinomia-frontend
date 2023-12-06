@@ -2,8 +2,8 @@
   <div class="cast">
     <div class="actor" v-for="actor in cast">
       <div class="actor__image-wrapper">
-        <img v-if="actor.profile_path" class="actor__image"
-          :src="`https://image.tmdb.org/t/p/original${actor.profile_path}`" :alt="actor.name">
+        <img v-if="actor.profile_path" class="actor__image" :src="`${baseImageUrlCompressed}${actor.profile_path}`"
+          :alt="actor.name">
         <img v-else class="actor__image actor__image-missing" src="/svg/actor.svg" :alt="actor.name">
       </div>
       <div class="actor__details">
@@ -22,6 +22,8 @@ interface Props {
 }
 
 defineProps<Props>()
+
+const baseImageUrlCompressed: string = import.meta.env.VITE_TMDB_BASE_IMAGE_URL_COMPRESSED
 </script>
 
 <style scoped lang="scss">

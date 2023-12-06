@@ -127,7 +127,7 @@ defineProps<Props>()
   margin: 0;
 }
 
-@media (max-width: variables.$breakpoint-small) {
+@media (max-width: variables.$breakpoint-s) {
   .modal {
     width: 90%;
   }

@@ -202,7 +202,7 @@ onBeforeMount(() => {
   color: variables.$secondary-color;
 }
 
-@media (max-width: variables.$breakpoint-big) {
+@media (max-width: variables.$breakpoint-l) {
   .options {
     width: 100%;
   }

@@ -118,7 +118,7 @@ watch(isMobileMenuOpen, () => {
   font-size: variables.$text-4xl;
 }
 
-@media (max-width: variables.$breakpoint-small) {
+@media (max-width: variables.$breakpoint-s) {
   .navbar {
     justify-content: space-between;
   }

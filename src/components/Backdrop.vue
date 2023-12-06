@@ -25,10 +25,12 @@ const moviesStore = useMoviesStore()
 
 const modules = [Autoplay, Pagination]
 
+const baseImageUrlOriginal: string = import.meta.env.VITE_TMDB_BASE_IMAGE_URL_ORIGINAL
+
 const movies: ComputedRef<MovieBrief[]> = computed(() => moviesStore.getMovies)
 
 const slideStyle = (movie: MovieBrief) => ({
-  background: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)), url('https://image.tmdb.org/t/p/original${movie.backdrop_path}')`,
+  background: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)), url('${baseImageUrlOriginal}${movie.backdrop_path}')`,
 })
 </script>
 
@@ -55,7 +57,7 @@ const slideStyle = (movie: MovieBrief) => ({
   font-weight: variables.$font-medium;
 }
 
-@media (max-width: variables.$breakpoint-small) {
+@media (max-width: variables.$breakpoint-s) {
   .swiper-container {
     max-height: -webkit-fill-available;
   }
