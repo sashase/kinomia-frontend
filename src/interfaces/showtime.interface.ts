@@ -1,17 +1,4 @@
-interface Network {
-  id: number
-  name: string
-}
-
-interface Cinema {
-  id: number
-  internal_cinema_id: string
-  name: string
-  address: string
-  network_id: number
-  city_id: number
-  network: Network
-}
+import { Cinema } from "."
 
 export interface Showtime {
   id: number

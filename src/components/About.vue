@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { MovieDetailed } from '../interfaces'
+import { MovieDetailed } from "../interfaces"
 import { prettifyDate } from "../core/helpers"
 
 interface Props {
@@ -42,11 +42,11 @@ const formatRuntime = (minutes: number): string => {
   const hours = Math.floor(minutes / 60)
   const remainingMinutes = minutes % 60
 
-  const hoursString = hours > 0 ? `${hours}h` : ''
-  const minutesString = remainingMinutes > 0 ? `${remainingMinutes}m` : ''
+  const hoursString = hours > 0 ? `${hours}h` : ""
+  const minutesString = remainingMinutes > 0 ? `${remainingMinutes}m` : ""
 
   if (hours === 0 && remainingMinutes === 0) {
-    return '0m'
+    return "0m"
   }
 
   return `${hoursString} ${minutesString}`

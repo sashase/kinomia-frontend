@@ -16,19 +16,19 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("../views/Movies.vue"),
       },
       {
-        path: "/theaters",
-        name: "Theaters",
-        component: () => import("../views/Theaters.vue"),
-      },
-      {
         path: "/digest/:movieId",
         name: "Digest",
         component: () => import("../views/Digest.vue"),
       },
       {
-        path: "/showtimes/:movieId",
-        name: "Showtimes",
-        component: () => import("../views/Showtimes.vue"),
+        path: "/cinemas",
+        name: "Cinemas",
+        component: () => import("../views/Cinemas.vue"),
+      },
+      {
+        path: "/cinema/:cinemaId",
+        name: "Cinema",
+        component: () => import("../views/Cinema.vue"),
       },
     ],
   },

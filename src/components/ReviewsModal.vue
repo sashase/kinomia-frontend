@@ -22,8 +22,8 @@
 </template>
 
 <script setup lang="ts">
-import { prettifyDate } from '../core/helpers'
-import { Review } from '../interfaces'
+import { prettifyDate } from "../core/helpers"
+import { Review } from "../interfaces"
 
 interface Props {
   reviews: Review[]
