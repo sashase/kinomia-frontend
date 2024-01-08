@@ -3,7 +3,7 @@
     <RouterLink class="navbar__title" to="/">Kinomia</RouterLink>
     <div class="navbar__links">
       <RouterLink to="/movies">Movies</RouterLink>
-      <RouterLink to="/theaters">Theaters</RouterLink>
+      <RouterLink to="/cinemas">Cinemas</RouterLink>
     </div>
     <div class="hamburger" @click="toggleMobileMenu" :class="isMobileMenuOpen && 'hamburger-active'">
       <span class="hamburger__bar"></span>
@@ -13,7 +13,7 @@
     <div class="navbar-mobile" :class="isMobileMenuOpen && 'navbar-mobile-active'">
       <div class="navbar-mobile__links">
         <RouterLink to="/movies" @click="closeMobileMenu">Movies</RouterLink>
-        <RouterLink to="/theaters" @click="closeMobileMenu">Theaters</RouterLink>
+        <RouterLink to="/cinemas" @click="closeMobileMenu">Cinemas</RouterLink>
       </div>
     </div>
   </nav>

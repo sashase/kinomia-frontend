@@ -7,8 +7,24 @@ class BackendApiService extends ApiService {
     return this.requestHandler(request)
   }
 
+  public static async getNetworks(): Promise<AxiosResponse> {
+    const request = this.axiosInstance.get(`${import.meta.env.VITE_APP_API_URL}/networks`)
+    return this.requestHandler(request)
+  }
+
   public static async getCities(): Promise<AxiosResponse> {
     const request = this.axiosInstance.get(`${import.meta.env.VITE_APP_API_URL}/cities`)
+    return this.requestHandler(request)
+  }
+
+  public static async getCinemas(networkId?: number, cityId?: number): Promise<AxiosResponse> {
+    let query: string = ""
+
+    if (networkId && cityId) query = `?network_id=${networkId}&city_id=${cityId}`
+    else if (networkId && !cityId) query = `?network_id=${networkId}`
+    else if (!networkId && cityId) query = `?city_id=${cityId}`
+
+    const request = this.axiosInstance.get(`${import.meta.env.VITE_APP_API_URL}/cinemas${query}`)
     return this.requestHandler(request)
   }
 

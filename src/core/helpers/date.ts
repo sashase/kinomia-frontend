@@ -1,6 +1,6 @@
 const monthNames = [
-  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 ]
 
 export const prettifyDate = (date: string): string => {  // Formatting date from "2024-01-01" to "01 Jan. 2024"
