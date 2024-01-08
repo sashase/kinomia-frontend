@@ -25,11 +25,6 @@ const routes: Array<RouteRecordRaw> = [
         name: "Cinemas",
         component: () => import("../views/Cinemas.vue"),
       },
-      {
-        path: "/cinema/:cinemaId",
-        name: "Cinema",
-        component: () => import("../views/Cinema.vue"),
-      },
     ],
   },
 ]
