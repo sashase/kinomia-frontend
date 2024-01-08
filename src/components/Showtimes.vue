@@ -6,10 +6,7 @@
     </div>
     <div class="showtimes">
       <div v-if="cinemasGroups" v-for="cinema in cinemasGroups" :key="cinema.cinemaName" class="cinema-group">
-        <div class="cinema-group__cinema">
-          <img class="cinema-group__network-image" :src="`/svg/${cinema.networkName}.svg`" :alt="cinema.networkName" />
-          <h3 class="cinema-group__cinema-name">{{ cinema.cinemaName }}</h3>
-        </div>
+        <h3 class="cinema-group__cinema-name">{{ cinema.cinemaName }}</h3>
         <div class="cinema-group__showtimes">
           <a v-for="showtime in cinema.showtimes" :key="showtime.id" :href="showtime.order_link"
             :class="`showtime ${isDateInPast(showtime.date) ? 'showtime-disabled' : ''}`">

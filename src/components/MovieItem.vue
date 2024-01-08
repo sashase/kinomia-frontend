@@ -4,7 +4,7 @@
       <img class="movie__poster" :src="`${baseImageUrlCompressed}${posterPath}`" :alt="title">
     </div>
     <div class="movie__details">
-      <p class="movie__title">{{ title }}</p>
+      <p class="movie__title">{{ title.length > 20 ? `${title.slice(0, 20)}...` : title }}</p>
       <p class="movie__rating" v-if="rating">{{ rating.toFixed(1) }}
         <i class="fa-solid fa-star fa-sm" style="color: #d6d329;" />
       </p>

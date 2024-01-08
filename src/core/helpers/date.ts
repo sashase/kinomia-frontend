@@ -14,6 +14,6 @@ export const parseDate = (date: string): string => {  // Formatting date from "0
 
   month = month.slice(0, month.length - 1)
 
-  return `${year}-${monthNames.indexOf(month) + 1}-${day}`
+  return `${year}-0${monthNames.indexOf(month) + 1}-${day}`
 }
 
