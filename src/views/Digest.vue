@@ -22,7 +22,7 @@
       </div>
       <div v-if="allShowtimes.length" class="overview-section overview-section-showtimes">
         <h5 class="overview-section__title">Showtimes</h5>
-        <Showtimes :allShowtimes="allShowtimes" />
+        <ShowtimesMovie :allShowtimes="allShowtimes" />
       </div>
       <div v-if="reviews.length" class="overview-section">
         <h5 class="overview-section__title">Reviews</h5>
@@ -38,7 +38,7 @@ import router from "../router"
 import TmdbApiService from "../core/services/TmdbApiService"
 import { MovieDetailed, Showtime, Actor, Review, } from "../interfaces"
 import { useMoviesStore } from "../stores"
-import Showtimes from "../components/Showtimes.vue"
+import ShowtimesMovie from "../components/ShowtimesMovie.vue"
 import Cast from "../components/Cast.vue"
 import About from "../components/About.vue"
 import Reviews from "../components/Reviews.vue"
@@ -67,7 +67,7 @@ onBeforeMount(async () => {
     .then(({ data }) => movie.value = data)
     .catch((error) => console.log(error))
 
-  BackendApiService.getShowtimes(parseInt(String(movieId)))
+  BackendApiService.getShowtimes({ movieId: parseInt(String(movieId)) })
     .then(({ data }) => allShowtimes.value = data)
     .catch((error) => console.log(error))
 

@@ -1,3 +1,5 @@
+import { Showtime, Option } from "../../interfaces"
+
 const monthNames = [
   "Jan", "Feb", "Mar", "Apr", "May", "Jun",
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
@@ -17,3 +19,18 @@ export const parseDate = (date: string): string => {  // Formatting date from "0
   return `${year}-0${monthNames.indexOf(month) + 1}-${day}`
 }
 
+export const isDateInPast = (date: string): boolean => {
+  const currentDate = new Date()
+  const showtimeDate = new Date(date)
+  return showtimeDate < currentDate
+}
+
+export const getDateOptions = (showtimes: Showtime[]): Option[] => {
+  const uniqueDates = [...new Set(showtimes.map((showtime) => showtime.date.split("T")[0]))]
+  return uniqueDates.map((uniqueDate, key) => ({ id: key, name: prettifyDate(uniqueDate) }))
+}
+
+export const formatShowtimeDate = (date: string): string => {
+  const time = new Date(date).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+  return time.replace(/\s/g, "")
+}

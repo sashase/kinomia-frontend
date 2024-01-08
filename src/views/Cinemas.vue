@@ -9,21 +9,42 @@
           src="/svg/map.svg" alt="map-view" />
       </div>
     </header>
-    <CinemasList v-if="selectedView === 1" />
-    <CinemasMap v-if="selectedView === 2" />
+    <CinemasList v-if="selectedView === 1" @openModal="(cinema) => toogleModal(cinema)" />
+    <CinemasMap v-if="selectedView === 2" @openModal="(cinema) => toogleModal(cinema)" />
+    <CinemaModal v-if="modalIsOpen" :cinema="selectedCinema" @closeModal="toogleModal" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, watch } from "vue"
 import CinemasList from "../components/CinemasList.vue"
 import CinemasMap from "../components/CinemasMap.vue"
+import { Cinema } from "../interfaces"
+import CinemaModal from "../components/CinemaModal.vue"
 
+
+// View
 const selectedView = ref<number>(1)
 
 const handleViewChange = (view: number): void => {
   selectedView.value = view
 }
+
+
+// Modal
+const modalIsOpen = ref<boolean>(false)
+const selectedCinema = ref<Cinema>()
+
+const toogleModal = (cinema?: Cinema) => {
+  if (modalIsOpen.value) return modalIsOpen.value = false
+
+  selectedCinema.value = cinema
+  modalIsOpen.value = true
+}
+
+watch(modalIsOpen, () => {
+  document.body.style.overflow = modalIsOpen.value ? "hidden" : ""
+})
 </script>
 
 

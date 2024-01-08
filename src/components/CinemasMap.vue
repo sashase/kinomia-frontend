@@ -7,25 +7,34 @@ import { Loader } from "@googlemaps/js-api-loader"
 import { computed, onBeforeMount, onMounted } from "vue"
 import { Cinema } from "../interfaces"
 import { useCinemasStore } from "../stores"
-import router from "../router"
 import BackendApiService from "../core/services/BackendApiService"
 import { MAP_CENTER, MAP_ZOOM_800, MAP_ZOOM_1000, MAP_ZOOM_1200, MAP_ZOOM_1400, MAP_ZOOM_1600, MAP_ZOOM_XL } from "../core/constants"
 
+
+// Emits
+interface Emits {
+  (e: "openModal", cinema: Cinema): void
+}
+
+const emit = defineEmits<Emits>()
+
+
+// Stores
+const cinemasStore = useCinemasStore()
+
+
+// Map
 const loader = new Loader({
   apiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   version: "weekly",
   libraries: ["maps", "geocoding", "marker"]
 })
 
-const cinemasStore = useCinemasStore()
-
 let geocoder: google.maps.Geocoder
 let markerLibrary: google.maps.MarkerLibrary
 let mapsLibrary: google.maps.MapsLibrary
-
 let map: google.maps.Map
 
-const cinemas = computed<Cinema[]>(() => cinemasStore.getCinemas)
 
 const createMap = async (zoomLevel: number): Promise<google.maps.Map> => {
   const mapOptions: google.maps.MapOptions = {
@@ -49,7 +58,7 @@ const createMarker = async (cinema: Cinema): Promise<void> => {
   })
 
   marker.addListener("click", () => {
-    router.push(`/cinema/${cinema.id}`)
+    emit("openModal", cinema)
   })
 }
 
@@ -58,9 +67,7 @@ const buildContent = (cinema: Cinema): HTMLDivElement => {
 
   content.classList.add("marker")
   content.innerHTML = `
-    <a class="icon"
-    href="/cinema/${cinema.id}"
-    onclick="event.preventDefault(); router.push("/cinemas/${cinema.id}")">
+    <a class="icon">
         <img src="/svg/marker-${cinema.network.name}.svg" />
         <span class="fa-sr-only">${cinema.name}</span>
     </a>
@@ -85,6 +92,11 @@ const calculateZoomLevel = (): number => {
   else return MAP_ZOOM_XL
 }
 
+// Computed properties
+const cinemas = computed<Cinema[]>(() => cinemasStore.getCinemas)
+
+
+// Lifecycle hooks
 onBeforeMount(() => {
   if (!cinemas.value.length) {
     BackendApiService.getCinemas()

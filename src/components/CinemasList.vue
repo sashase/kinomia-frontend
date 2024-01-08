@@ -9,19 +9,17 @@
       </button>
     </div>
     <div class="list__cinemas">
-      <router-link v-if="filteredCinemas?.length" v-for="cinema in filteredCinemas" :to="`/cinema/${cinema.id}`"
-        class="cinema" :key="cinema.name">
-        <div class="cinema__details">
-          <img class="cinema__image" src="/svg/film.svg" :alt="cinema.network.name">
-          <div class="cinema__metadata">
-            <h5 class="cinema__name">{{ cinema.name }}</h5>
-            <div class="metadata__location">
-              <p class="cinema__city">{{ cinema.city.name }}</p>
-              <p class="cinema__address">{{ cinema.address }}</p>
-            </div>
+      <button v-if="filteredCinemas?.length" v-for="cinema in filteredCinemas" class="cinema" :key="cinema.name"
+        @click="emit('openModal', cinema)">
+        <img class="cinema__image" src="/svg/film.svg" :alt="cinema.network.name">
+        <div class="cinema__metadata">
+          <h5 class="cinema__name">{{ cinema.name }}</h5>
+          <div class="metadata__location">
+            <p class="cinema__city">{{ cinema.city.name }}</p>
+            <p class="cinema__address">{{ cinema.address }}</p>
           </div>
         </div>
-      </router-link>
+      </button>
       <p v-else>No cinema is found</p>
     </div>
   </div>
@@ -33,6 +31,13 @@ import { useCinemasStore } from "../stores"
 import BackendApiService from "../core/services/BackendApiService"
 import OptionsDropdown from "../components/OptionsDropdown.vue"
 import { Cinema, City, Network } from "../interfaces"
+
+// Emits
+interface Emits {
+  (e: "openModal", cinema: Cinema): void
+}
+
+const emit = defineEmits<Emits>()
 
 
 // Stores
@@ -158,21 +163,16 @@ onBeforeMount(() => {
 }
 
 .cinema {
-  background-color: variables.$primary-surface-color;
-  border-radius: variables.$border-rounded;
-  padding: 0.75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  height: 100%;
-}
-
-.cinema__details {
-  height: 100%;
   display: grid;
   grid-template-columns: 3fr 4fr;
-  gap: 1rem;
+  gap: 0.75rem;
+  background-color: variables.$primary-surface-color;
+  border: 0;
+  border-radius: variables.$border-rounded;
+  padding: 0.75rem;
   align-items: center;
+  justify-content: start;
+  text-align: left;
 }
 
 .cinema__image {
